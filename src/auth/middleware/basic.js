@@ -17,13 +17,14 @@ module.exports = async (req,res,next)=>{
             const user = await Users.findOne({where:{username:username}});
             const valid = await bcrypt.compare(password,user.password);
             req.user=user;
+
             if(valid) {
                next()
             } else {
-                next('user is not valid')
+                next('password is not valid')
             }
         } catch(error) {
-            res.send(error)
+            res.send('user not valid')
         }
     }else{
         next('Not Autherised')
